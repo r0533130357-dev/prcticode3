@@ -3,11 +3,9 @@ using TodoApi; // מביא את הקלאסים שנוצרו מה-scaffold
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ------------------- הזרקת DbContext -------------------
 builder.Services.AddDbContext<ToDoDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("ToDoDB"),
-    new MySqlServerVersion(new Version(8, 0, 44)))); // בדקי שגרסת MySQL תואמת
-// -------------------------------------------------------
+    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("ToDoDB"))));
 
 // ------------------- הגדרת CORS -------------------
 builder.Services.AddCors(options =>
@@ -46,6 +44,7 @@ app.MapGet("/", () => "Hello World!");
 // 1️⃣ שליפת כל המשימות
 app.MapGet("/tasks", async (ToDoDbContext context) =>
 {
+    
     return await context.Items.ToListAsync();
 });
 
