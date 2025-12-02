@@ -26,29 +26,20 @@ export default {
     }
   },
 
-  // setCompleted: async (task) => {
-  //   try {
-  //     if (!task.id) {
-  //       throw new Error("Task ID is missing!");
-  //     }
-
-  //     const result = await axios.put(`${apiUrl}/tasks/${task.id}`, task, {
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       }
-  //     });
-  //     return result.data;
-  //   } catch (error) {
-  //     console.error("Error updating task:", error);
-  //     throw error;
-  //   }
-  // },
-
   
-  setCompleted: async (id, isComplete) => {
-    const result = await axios.put(`${apiUrl}/tasks/${id}`, { isComplete });
+setCompleted: async (todo, isComplete) => {
+  try {
+    const result = await axios.put(`${apiUrl}/tasks/${todo.id}`, {
+      id: todo.id,
+      name: todo.name,
+      isComplete: isComplete
+    });
     return result.data;
-  },
+  } catch (error) {
+    console.error("Error updating task:", error);
+    throw error;
+  }
+},
 
 
 

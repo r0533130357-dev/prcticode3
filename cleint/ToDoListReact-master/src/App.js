@@ -17,10 +17,11 @@ function App() {
     await getTodos();//refresh tasks list (in order to see the new one)
   }
 
+
   async function updateCompleted(todo, isComplete) {
-    await service.setCompleted(todo.id, isComplete);
-    await getTodos();//refresh tasks list (in order to see the updated one)
-  }
+  await service.setCompleted(todo, isComplete);
+  await getTodos();
+}
 
   async function deleteTodo(id) {
     await service.deleteTask(id);
@@ -50,6 +51,7 @@ function App() {
                   <button className="destroy" onClick={() => deleteTodo(todo.id)}></button>
                 </div>
               </li>
+
             );
           })}
         </ul>
